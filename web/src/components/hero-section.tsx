@@ -35,32 +35,29 @@ export function HeroSection() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.9, ease: "easeOut" }}
-        className="absolute bottom-20 left-0 right-0 z-20 flex flex-col items-center gap-3 px-4"
+        className="absolute bottom-10 left-0 right-0 z-20 flex flex-col items-center gap-2 px-4"
       >
         <button
           type="button"
           onClick={scrollToWaitlist}
           className="rounded-full border border-text/25 bg-bg/55 px-9 py-3.5 text-sm font-medium text-text shadow-sm backdrop-blur-md transition-colors hover:border-text/45 hover:bg-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-text/25 focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
         >
-          Join beta
+          Join Beta
         </button>
-        <p className="text-[11px] font-light tracking-[0.22em] text-text-muted">
-          Waitlist below
-        </p>
-      </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2"
-      >
         <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-          className="flex h-8 w-5 items-start justify-center rounded-full border border-text-muted/30 pt-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          aria-hidden
         >
-          <div className="h-1.5 w-0.5 rounded-full bg-text-muted/50" />
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+            className="flex h-8 w-5 items-start justify-center rounded-full border border-text-muted/30 pt-2"
+          >
+            <div className="h-1.5 w-0.5 rounded-full bg-text-muted/50" />
+          </motion.div>
         </motion.div>
       </motion.div>
     </section>
