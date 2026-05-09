@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
@@ -153,6 +153,21 @@ export function WaitlistSection() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const goToSlide = useCallback((index: number) => {
+    setActiveSlide(index);
+    setPaused(true);
+    setTimeout(() => setPaused(false), 6000);
+  }, []);
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(() => {
+      setActiveSlide((p) => (p + 1) % slides.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [paused]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -166,26 +181,27 @@ export function WaitlistSection() {
       className="relative w-full bg-bg border-t border-border/20"
     >
       <div className="w-full max-w-[1400px] mx-auto px-10 md:px-16 lg:px-24 py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-20 xl:gap-32 items-start">
-          {/* Left — Copy + Form */}
+        <div className="flex flex-col items-center gap-20">
+          {/* Centered copy + form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-center max-w-2xl"
           >
             <h2 className="font-display text-3xl md:text-4xl font-medium leading-[1.25] tracking-tight mb-5">
               Get early access<span className="text-accent"> and 1 GB free</span>
               <br className="hidden md:block" />
-              memory storage.
+              {" "}memory storage.
             </h2>
-            <p className="text-text-muted text-[15px] leading-relaxed mb-14 max-w-md">
+            <p className="text-text-muted text-[15px] leading-relaxed mb-14 max-w-md mx-auto">
               Be among the first to give your AI agents persistent, structured
               memory. No credit card required.
             </p>
 
             {!submitted ? (
-              <form onSubmit={handleSubmit} className="space-y-3.5 max-w-sm">
+              <form onSubmit={handleSubmit} className="space-y-3.5 max-w-sm mx-auto">
                 <input
                   type="text"
                   placeholder="Name"
@@ -212,7 +228,7 @@ export function WaitlistSection() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="max-w-sm p-5 rounded-xl border border-accent/20 bg-accent/5"
+                className="max-w-sm mx-auto p-5 rounded-xl border border-accent/20 bg-accent/5"
               >
                 <p className="text-accent font-medium text-sm mb-1">
                   You&apos;re in!
@@ -224,13 +240,13 @@ export function WaitlistSection() {
             )}
           </motion.div>
 
-          {/* Right — Slide carousel */}
+          {/* Centered slide carousel */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="w-full"
+            className="w-full max-w-xl"
           >
             <div className="rounded-2xl border border-border/30 bg-surface overflow-hidden">
               <div className="aspect-[4/3] relative">
@@ -246,7 +262,7 @@ export function WaitlistSection() {
                     <div className="flex-1">
                       <SlideVisual visual={slides[activeSlide].visual} />
                     </div>
-                    <div className="px-8 pb-6">
+                    <div className="px-8 pb-6 text-center">
                       <h3 className="font-display text-base font-semibold mb-1.5">
                         {slides[activeSlide].title}
                       </h3>
@@ -263,7 +279,7 @@ export function WaitlistSection() {
                   {slides.map((_, i) => (
                     <button
                       key={i}
-                      onClick={() => setActiveSlide(i)}
+                      onClick={() => goToSlide(i)}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
                         i === activeSlide
                           ? "bg-accent w-6"
@@ -275,7 +291,7 @@ export function WaitlistSection() {
                 <div className="flex gap-2">
                   <button
                     onClick={() =>
-                      setActiveSlide((p) => (p - 1 + slides.length) % slides.length)
+                      goToSlide((activeSlide - 1 + slides.length) % slides.length)
                     }
                     className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-text-muted hover:text-text hover:border-text-muted/40 transition-colors"
                   >
@@ -285,7 +301,7 @@ export function WaitlistSection() {
                   </button>
                   <button
                     onClick={() =>
-                      setActiveSlide((p) => (p + 1) % slides.length)
+                      goToSlide((activeSlide + 1) % slides.length)
                     }
                     className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-text-muted hover:text-text hover:border-text-muted/40 transition-colors"
                   >
