@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -20,9 +21,17 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-bg/80 backdrop-blur-md border-b border-border/40">
       <Link
         href="/"
-        className="font-display text-lg font-semibold tracking-wide text-text hover:text-accent transition-colors"
+        aria-label="MemoX home"
+        className="flex items-center opacity-95 transition-opacity hover:opacity-100"
       >
-        MemoX
+        <Image
+          src="/logo.png"
+          alt=""
+          width={36}
+          height={36}
+          className="h-9 w-9 object-contain"
+          priority
+        />
       </Link>
 
       <div className="flex items-center gap-8">

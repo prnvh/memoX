@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { getSupabase } from "@/lib/supabase";
 
 export function WaitlistSection() {
   const [name, setName] = useState("");
@@ -17,18 +16,33 @@ export function WaitlistSection() {
     setLoading(true);
     setError("");
 
-    const { error: dbError } = await getSupabase()
-      .from("waitlist")
-      .insert({ name: name || null, email });
+    let res: Response;
+    try {
+      res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name || null, email }),
+      });
+    } catch {
+      setLoading(false);
+      setError("Network error. Please try again.");
+      return;
+    }
 
     setLoading(false);
 
-    if (dbError) {
-      if (dbError.code === "23505") {
-        setError("You're already on the list!");
-      } else {
-        setError("Something went wrong. Please try again.");
-      }
+    if (res.status === 409) {
+      setError("You're already on the list!");
+      return;
+    }
+
+    if (res.status === 503) {
+      setError("Waitlist is temporarily unavailable. Please try again later.");
+      return;
+    }
+
+    if (!res.ok) {
+      setError("Something went wrong. Please try again.");
       return;
     }
 

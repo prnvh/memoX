@@ -1,12 +1,80 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { HashScroll } from "@/components/hash-scroll";
+import { JsonLd } from "@/components/json-ld";
+import { getSiteUrl } from "@/lib/site";
+
+const siteUrl = getSiteUrl();
+
+const description =
+  "A persistent, structured memory layer that gives AI agents long-term recall. Join the waitlist for early access.";
+
+const ogTitle = "MemoX — structured memory for AI agents & LLMs";
+
+const ogDescription =
+  "One persistent memory layer for ChatGPT, Claude, Gemini, Cursor, and custom agents — long-term structured recall you control.";
 
 export const metadata: Metadata = {
-  title: "MemoX — Structured Memory for AI",
-  description:
-    "A persistent, structured memory layer that gives AI agents long-term recall. Join the waitlist for early access.",
+  metadataBase: new URL(siteUrl),
+  title: "MemoX",
+  description,
+  applicationName: "MemoX",
+  keywords: [
+    "MemoX",
+    "AI memory",
+    "structured memory",
+    "LLM memory",
+    "AI agent memory",
+    "persistent AI context",
+    "ChatGPT memory",
+    "Claude memory",
+    "Gemini memory",
+    "Cursor AI memory",
+    "long-term AI recall",
+    "memory layer",
+    "context layer",
+    "AI waitlist",
+  ],
+  authors: [{ name: "MemoX", url: siteUrl }],
+  creator: "MemoX",
+  publisher: "MemoX",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "MemoX",
+    title: ogTitle,
+    description: ogDescription,
+    images: [{ url: "/logo.png", alt: "MemoX logo" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: ogTitle,
+    description: ogDescription,
+    images: ["/logo.png"],
+  },
+  alternates: {
+    canonical: "/",
+  },
+  category: "technology",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#111110",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -29,6 +97,8 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-bg text-text antialiased">
+        <JsonLd />
+        <HashScroll />
         <Navbar />
         <main>{children}</main>
         <Footer />
