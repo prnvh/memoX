@@ -26,8 +26,8 @@ export function CarouselSection() {
               to you.
             </h2>
             <p className="text-text-muted text-[15px] leading-relaxed max-w-sm mb-10">
-              Not one chatbot. MemoX gives you persistent, structured memory
-              that works across every AI tool — and stays under your control.
+              Works with ChatGPT, Claude, Gemini, Cursor, and your own agents.
+              One persistent memory that stays under your control.
             </p>
             <p className="text-text-muted/40 text-xs tracking-widest uppercase">
               drag to explore &rarr;

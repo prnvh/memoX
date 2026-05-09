@@ -42,8 +42,8 @@ const CARDS: CardData[] = [
   {
     title: "One memory for every AI you use.",
     description:
-      "Switch between ChatGPT, Claude, Cursor, or your own agents. Your memory moves with you.",
-    detail: "Cross-platform",
+      "Works with ChatGPT, Claude, Gemini, Cursor, and your own agents. Your memory moves with you.",
+    detail: "Multi-platform",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
         <rect x="2" y="4" width="7" height="7" rx="1.5" stroke="rgba(255,255,255,0.4)" strokeWidth="1.2" />

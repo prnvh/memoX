@@ -1,17 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { getSupabase } from "@/lib/supabase";
-
-const MemoryGraph3D = dynamic(
-  () =>
-    import("@/components/memory-graph-3d").then((mod) => ({
-      default: mod.MemoryGraph3D,
-    })),
-  { ssr: false }
-);
 
 export function WaitlistSection() {
   const [name, setName] = useState("");
@@ -45,42 +36,75 @@ export function WaitlistSection() {
   }
 
   return (
-    <section id="waitlist" className="relative w-full bg-bg overflow-hidden">
-      {/* Top — Copy + Form */}
-      <div className="relative z-10 pt-28 pb-8 flex flex-col items-center text-center px-6">
+    <section id="waitlist" className="relative w-full bg-bg overflow-hidden py-28 px-6">
+      {/* Subtle radial glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(201,162,39,0.04) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center text-center">
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/[0.06] mb-8"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+          <span className="text-accent text-xs font-medium tracking-wide">Early Access</span>
+        </motion.div>
+
+        {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7 }}
-          className="font-display text-4xl md:text-5xl lg:text-[3.4rem] font-medium leading-[1.1] tracking-tight text-text mb-5 max-w-2xl"
+          className="font-display text-4xl md:text-5xl lg:text-[3.4rem] font-medium leading-[1.1] tracking-tight text-text mb-5"
         >
           Tell it once.
           <br />
           Remember everywhere.
         </motion.h2>
 
+        {/* Value prop */}
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-text-muted text-[15px] leading-relaxed max-w-lg mb-10"
+          className="text-accent text-sm md:text-base font-medium mb-3"
         >
-          Give your AI persistent, structured memory that works across every
-          tool — and belongs to you. Join the waitlist for early access.
+          Join the beta to access 5 GB of storage. Free. Forever.
         </motion.p>
 
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="text-text-muted text-[15px] leading-relaxed max-w-lg mb-10"
+        >
+          Persistent, structured memory that works across ChatGPT, Claude,
+          Gemini, Cursor, and your own agents — and belongs to you.
+        </motion.p>
+
+        {/* Form */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          className="w-full max-w-lg"
         >
           {!submitted ? (
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-lg"
+              className="flex flex-col sm:flex-row items-center gap-3 w-full"
             >
               <input
                 type="text"
@@ -102,7 +126,7 @@ export function WaitlistSection() {
                 disabled={loading}
                 className="w-full sm:w-auto px-7 py-3 rounded-full bg-text text-bg text-sm font-medium hover:bg-accent hover:text-bg transition-all duration-300 disabled:opacity-50 whitespace-nowrap"
               >
-                {loading ? "Joining..." : "Join Waitlist"}
+                {loading ? "Joining..." : "Join Beta"}
               </button>
             </form>
           ) : (
@@ -121,19 +145,18 @@ export function WaitlistSection() {
             <p className="text-text-muted text-xs mt-3">{error}</p>
           )}
         </motion.div>
-      </div>
 
-      {/* Bottom — Interactive 3D brain/graph */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="relative w-full h-[50vh] min-h-[400px] max-h-[600px]"
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent z-10 pointer-events-none" />
-        <MemoryGraph3D className="w-full h-full" nodeCount={100} />
-      </motion.div>
+        {/* Trust line */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+          className="text-text-muted/40 text-xs mt-8"
+        >
+          No spam. Unsubscribe anytime. Your data stays yours.
+        </motion.p>
+      </div>
     </section>
   );
 }
