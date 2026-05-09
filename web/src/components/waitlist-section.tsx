@@ -37,7 +37,15 @@ export function WaitlistSection() {
     }
 
     if (res.status === 503) {
-      setError("Waitlist is temporarily unavailable. Please try again later.");
+      let msg =
+        "Waitlist is temporarily unavailable. Please try again later.";
+      try {
+        const data = (await res.json()) as { hint?: string };
+        if (data.hint) msg = data.hint;
+      } catch {
+        /* ignore invalid JSON */
+      }
+      setError(msg);
       return;
     }
 

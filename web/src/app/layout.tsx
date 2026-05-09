@@ -51,6 +51,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -58,13 +61,11 @@ export const metadata: Metadata = {
     siteName: "MemoX",
     title: ogTitle,
     description: ogDescription,
-    images: [{ url: "/logo.png", alt: "MemoX logo" }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: ogTitle,
     description: ogDescription,
-    images: ["/logo.png"],
   },
   alternates: {
     canonical: "/",

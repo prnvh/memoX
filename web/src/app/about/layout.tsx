@@ -14,13 +14,11 @@ export const metadata: Metadata = {
     siteName: "MemoX",
     title: "About MemoX — structured memory for AI",
     description,
-    images: [{ url: "/logo.png", alt: "MemoX logo" }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "About MemoX — structured memory for AI",
     description,
-    images: ["/logo.png"],
   },
 };
 

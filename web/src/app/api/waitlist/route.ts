@@ -31,8 +31,15 @@ export async function POST(req: Request) {
 
   const supabase = createSupabaseAdmin();
   if (!supabase) {
-    console.error("Waitlist API: missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
-    return NextResponse.json({ error: "misconfigured" }, { status: 503 });
+    console.error(
+      "Waitlist API: missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY",
+    );
+    const payload: Record<string, string> = { error: "misconfigured" };
+    if (process.env.NODE_ENV === "development") {
+      payload.hint =
+        "Add SUPABASE_SERVICE_ROLE_KEY to web/.env.local (Supabase → Settings → API → service_role), then restart the dev server.";
+    }
+    return NextResponse.json(payload, { status: 503 });
   }
 
   const { error } = await supabase.from("waitlist").insert({ email, name });

@@ -21,10 +21,6 @@ export function JsonLd() {
         "@id": `${url}/#organization`,
         name: "MemoX",
         url,
-        logo: {
-          "@type": "ImageObject",
-          url: `${url}/logo.png`,
-        },
         contactPoint: {
           "@type": "ContactPoint",
           email: "hello@memox.dev",
