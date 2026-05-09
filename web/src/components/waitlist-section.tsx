@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 const CELL_SIZE = 32;
 
@@ -174,7 +174,7 @@ export function WaitlistSection() {
     setLoading(true);
     setError("");
 
-    const { error: dbError } = await supabase
+    const { error: dbError } = await getSupabase()
       .from("waitlist")
       .insert({ name: name || null, email });
 
