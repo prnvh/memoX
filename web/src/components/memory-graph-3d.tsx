@@ -21,47 +21,11 @@ const NODE_LABELS = [
   "Patch History", "Agent Memory", "Session Log", "Knowledge Graph",
 ];
 
-function brainSurface(u: number, v: number): THREE.Vector3 {
-  const theta = u * Math.PI * 2;
-  const phi = v * Math.PI;
-
-  const baseR = 3.8;
-
-  const sinPhi = Math.sin(phi);
-  const cosPhi = Math.cos(phi);
-  const cosTheta = Math.cos(theta);
-  const sinTheta = Math.sin(theta);
-
-  const xScale = 1.15;
-  const yScale = 1.05;
-  const zScale = 0.95;
-
-  let x = baseR * sinPhi * cosTheta * xScale;
-  let y = baseR * cosPhi * yScale;
-  let z = baseR * sinPhi * sinTheta * zScale;
-
-  const fissureDepth = 0.25 * Math.exp(-((x * x) / 0.8));
-  z *= (1 - fissureDepth);
-
-  const bulge = 0.15 * Math.sin(phi * 3) * Math.cos(theta * 2);
-  const ridges = 0.1 * Math.sin(phi * 5 + theta * 3);
-  const folds = 0.08 * Math.cos(phi * 7) * Math.sin(theta * 4);
-
-  const nx = x / (baseR * xScale + 0.001);
-  const ny = y / (baseR * yScale + 0.001);
-  const nz = z / (baseR * zScale + 0.001);
-
-  x += nx * (bulge + ridges + folds);
-  y += ny * (bulge + ridges * 0.5);
-  z += nz * (bulge + folds);
-
-  return new THREE.Vector3(x, y, z);
-}
-
-function generateBrainGraph(nodeCount: number) {
+function generateGlobeGraph(nodeCount: number) {
   const nodes: GraphNode[] = [];
   const edges: [number, number][] = [];
 
+  const goldenRatio = (1 + Math.sqrt(5)) / 2;
   const accentCount = Math.floor(nodeCount * 0.1);
   const accentSet = new Set<number>();
   while (accentSet.size < accentCount) {
@@ -74,20 +38,23 @@ function generateBrainGraph(nodeCount: number) {
     labelledIndices.add(Math.floor(Math.random() * nodeCount));
   }
 
-  const goldenRatio = (1 + Math.sqrt(5)) / 2;
   let labelIdx = 0;
-
   for (let i = 0; i < nodeCount; i++) {
-    const u = (i / goldenRatio) % 1;
-    const v = i / (nodeCount - 1);
+    const y = 1 - (i / (nodeCount - 1)) * 2;
+    const radiusAtY = Math.sqrt(1 - y * y);
+    const theta = (2 * Math.PI * i) / goldenRatio;
+    const r = 4.5;
 
-    const pos = brainSurface(u, v);
     const isHub = hubIndices.includes(i);
     const hasLabel = labelledIndices.has(i);
 
     nodes.push({
       id: i,
-      position: pos,
+      position: new THREE.Vector3(
+        r * radiusAtY * Math.cos(theta),
+        r * y,
+        r * radiusAtY * Math.sin(theta)
+      ),
       size: isHub ? 0.14 : 0.04 + Math.random() * 0.055,
       color: accentSet.has(i) ? "#d4af37" : isHub ? "#ffffff" : "#a0a0a0",
       label: hasLabel ? NODE_LABELS[labelIdx++ % NODE_LABELS.length] : undefined,
@@ -122,7 +89,7 @@ function generateBrainGraph(nodeCount: number) {
   return { nodes, edges };
 }
 
-function BrainNodes({ nodes }: { nodes: GraphNode[] }) {
+function GlobeNodes({ nodes }: { nodes: GraphNode[] }) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const colorArray = useMemo(() => {
@@ -196,7 +163,7 @@ function NodeLabels({ nodes }: { nodes: GraphNode[] }) {
   );
 }
 
-function BrainEdges({ nodes, edges }: { nodes: GraphNode[]; edges: [number, number][] }) {
+function GlobeEdges({ nodes, edges }: { nodes: GraphNode[]; edges: [number, number][] }) {
   const lineRef = useRef<THREE.LineSegments>(null);
 
   const geometry = useMemo(() => {
@@ -227,9 +194,18 @@ function BrainEdges({ nodes, edges }: { nodes: GraphNode[]; edges: [number, numb
   );
 }
 
+function GlobeWireframe() {
+  return (
+    <mesh>
+      <sphereGeometry args={[4.5, 32, 32]} />
+      <meshBasicMaterial color="#ffffff" wireframe transparent opacity={0.018} />
+    </mesh>
+  );
+}
+
 function Scene({ nodeCount }: { nodeCount: number }) {
   const groupRef = useRef<THREE.Group>(null);
-  const { nodes, edges } = useMemo(() => generateBrainGraph(nodeCount), [nodeCount]);
+  const { nodes, edges } = useMemo(() => generateGlobeGraph(nodeCount), [nodeCount]);
 
   useFrame(({ clock }) => {
     if (groupRef.current) {
@@ -239,8 +215,9 @@ function Scene({ nodeCount }: { nodeCount: number }) {
 
   return (
     <group ref={groupRef}>
-      <BrainNodes nodes={nodes} />
-      <BrainEdges nodes={nodes} edges={edges} />
+      <GlobeWireframe />
+      <GlobeNodes nodes={nodes} />
+      <GlobeEdges nodes={nodes} edges={edges} />
       <NodeLabels nodes={nodes} />
     </group>
   );

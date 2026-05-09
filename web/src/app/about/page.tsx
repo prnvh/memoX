@@ -13,34 +13,34 @@ const MemoryGraph3D = dynamic(
 
 const capabilities = [
   {
-    title: "Structured Memory",
+    title: "Tell it once",
     description:
-      "Wiki-style pages, semantic edges, and temporal facts — not just raw text blobs.",
+      "Your preferences, decisions, and context are remembered across every session — no repeating yourself.",
   },
   {
-    title: "Deduplication",
+    title: "Use it everywhere",
     description:
-      "Incoming info is diffed against existing memory. Only net-new knowledge is committed.",
+      "One memory for every AI you use. Switch tools freely — your context moves with you.",
   },
   {
-    title: "Temporal Awareness",
+    title: "See & edit anytime",
     description:
-      "Resolves relative dates, tracks state changes, and answers temporal queries accurately.",
+      "Browse your memory, correct mistakes, delete what you don't want. It's never a black box.",
   },
   {
-    title: "Read Orchestration",
+    title: "No more setup prompts",
     description:
-      "Multi-stage recall pipeline: index scoring, evidence extraction, source-locked answers.",
+      "Stop pasting context documents. MemoX gives your AI the background it needs automatically.",
   },
   {
-    title: "Agent-Native API",
+    title: "Built for real work",
     description:
-      "Drop-in memory layer for any AI agent. Simple read/write interface, complex internals.",
+      "Not random facts — your projects, team decisions, and timelines. Organized and connected.",
   },
   {
-    title: "Governance",
+    title: "Private by default",
     description:
-      "Every mutation is logged. Patch history, provenance tracking, configurable retention.",
+      "Your data stays yours. Full control over who sees what — export anytime, delete anything.",
   },
 ];
 
@@ -56,9 +56,9 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="font-display text-4xl md:text-5xl lg:text-[3.4rem] font-medium leading-[1.12] tracking-tight mb-6 max-w-3xl mx-auto"
           >
-            Giving AI agents memory
+            One memory for every
             <br />
-            that actually persists.
+            AI you use.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -66,9 +66,9 @@ export default function AboutPage() {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="text-text-muted text-base md:text-lg leading-relaxed max-w-2xl mx-auto"
           >
-            MemoX is a structured memory layer for AI agents. It bridges the gap
-            between stateless LLM conversations and truly intelligent,
-            context-aware systems.
+            MemoX gives your AI persistent memory that belongs to you — not locked
+            into one chatbot. Tell it once, use it everywhere. See it, edit it,
+            delete it anytime.
           </motion.p>
         </div>
       </section>
@@ -97,9 +97,9 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="font-display text-3xl md:text-[2.2rem] font-medium leading-[1.2] tracking-tight">
-              We&apos;re building the memory
-              layer that agents need to
-              reason over time.
+              Your AI memory should
+              belong to you, not
+              one chatbot.
             </h2>
           </motion.div>
           <motion.div
@@ -112,19 +112,20 @@ export default function AboutPage() {
             <p>
               Every time you start a new conversation with an AI, it forgets
               everything. Your preferences, your project context, your decisions
-              — all gone. Agents today are stateless by default.
+              — gone. You end up repeating yourself, pasting setup prompts,
+              maintaining context documents. It shouldn&apos;t be this way.
             </p>
             <p>
-              MemoX changes that. It provides a structured knowledge graph that
-              persists across sessions, agents, and time. Facts are stored as
-              wiki pages, relationships as semantic edges, and changes as
-              temporal events — all governed, audited, and queryable.
+              MemoX gives you one persistent memory that works across every AI
+              tool you use. Tell it once, and it remembers — your projects, your
+              preferences, your team&apos;s decisions. Structured, searchable,
+              and always up to date.
             </p>
             <p>
-              What started as an experiment in giving LLM workflows persistent
-              context has evolved into a full memory architecture: read
-              orchestration, write governance, deduplication, temporal
-              resolution, and a simple API that any agent can plug into.
+              And it&apos;s yours. You can see everything that&apos;s stored,
+              edit it when things change, delete what you don&apos;t want kept.
+              Separate memory spaces for work, personal projects, or different
+              teams. Private by default. Controlled by you.
             </p>
           </motion.div>
         </div>
@@ -140,7 +141,7 @@ export default function AboutPage() {
             transition={{ duration: 0.4 }}
             className="text-xs tracking-[0.25em] uppercase text-text-muted/60 font-medium mb-10"
           >
-            Capabilities
+            What you get
           </motion.h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border/20 rounded-xl overflow-hidden">
             {capabilities.map((cap, i) => (
