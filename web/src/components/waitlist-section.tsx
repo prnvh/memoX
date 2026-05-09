@@ -181,27 +181,26 @@ export function WaitlistSection() {
       className="relative w-full bg-bg border-t border-border/20"
     >
       <div className="w-full max-w-[1400px] mx-auto px-10 md:px-16 lg:px-24 py-32">
-        <div className="flex flex-col items-center gap-20">
-          {/* Centered copy + form */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-20 xl:gap-32 items-center">
+          {/* Left — Copy + Form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-center max-w-2xl"
           >
             <h2 className="font-display text-3xl md:text-4xl font-medium leading-[1.25] tracking-tight mb-5">
               Get early access<span className="text-accent"> and 1 GB free</span>
               <br className="hidden md:block" />
               {" "}memory storage.
             </h2>
-            <p className="text-text-muted text-[15px] leading-relaxed mb-14 max-w-md mx-auto">
+            <p className="text-text-muted text-[15px] leading-relaxed mb-14 max-w-md">
               Be among the first to give your AI agents persistent, structured
               memory. No credit card required.
             </p>
 
             {!submitted ? (
-              <form onSubmit={handleSubmit} className="space-y-3.5 max-w-sm mx-auto">
+              <form onSubmit={handleSubmit} className="space-y-3.5 max-w-sm">
                 <input
                   type="text"
                   placeholder="Name"
@@ -228,7 +227,7 @@ export function WaitlistSection() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="max-w-sm mx-auto p-5 rounded-xl border border-accent/20 bg-accent/5"
+                className="max-w-sm p-5 rounded-xl border border-accent/20 bg-accent/5"
               >
                 <p className="text-accent font-medium text-sm mb-1">
                   You&apos;re in!
@@ -240,13 +239,13 @@ export function WaitlistSection() {
             )}
           </motion.div>
 
-          {/* Centered slide carousel */}
+          {/* Right — Slide carousel */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="w-full max-w-xl"
+            className="w-full"
           >
             <div className="rounded-2xl border border-border/30 bg-surface overflow-hidden">
               <div className="aspect-[4/3] relative">
@@ -262,7 +261,7 @@ export function WaitlistSection() {
                     <div className="flex-1">
                       <SlideVisual visual={slides[activeSlide].visual} />
                     </div>
-                    <div className="px-8 pb-6 text-center">
+                    <div className="px-8 pb-6">
                       <h3 className="font-display text-base font-semibold mb-1.5">
                         {slides[activeSlide].title}
                       </h3>

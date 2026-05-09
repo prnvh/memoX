@@ -1,20 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-
-const MemoryCarousel3D = dynamic(
-  () =>
-    import("@/components/memory-carousel-3d").then((mod) => ({
-      default: mod.MemoryCarousel3D,
-    })),
-  { ssr: false }
-);
+import { MemoryCarousel3D } from "@/components/memory-carousel-3d";
 
 export function CarouselSection() {
   return (
     <section className="relative w-full bg-bg py-24 overflow-hidden">
-      <div className="max-w-5xl mx-auto px-8 text-center mb-8">
+      <div className="max-w-5xl mx-auto px-8 text-center mb-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -33,7 +25,7 @@ export function CarouselSection() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-full h-[480px] md:h-[540px]"
+        className="w-full h-[420px] md:h-[460px]"
       >
         <MemoryCarousel3D className="w-full h-full" />
       </motion.div>
@@ -43,7 +35,7 @@ export function CarouselSection() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="text-center text-text-muted/50 text-xs tracking-wide mt-4"
+        className="text-center text-text-muted/40 text-xs tracking-widest uppercase mt-2"
       >
         drag to explore
       </motion.p>

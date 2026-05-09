@@ -3,14 +3,14 @@
 @theme {
   --font-display: "Newsreader", serif;
   --font-body: "Inter", sans-serif;
-  --color-bg: #0c0b0a;
-  --color-surface: #131210;
-  --color-surface-light: #1a1917;
-  --color-text: #f0ece4;
-  --color-text-muted: #807a6f;
+  --color-bg: #111110;
+  --color-surface: #191816;
+  --color-surface-light: #211f1c;
+  --color-text: #ede9e0;
+  --color-text-muted: #8a8478;
   --color-accent: #c9a227;
   --color-accent-dim: #a88920;
-  --color-border: #252320;
+  --color-border: #2a2824;
 }
 
 html {
